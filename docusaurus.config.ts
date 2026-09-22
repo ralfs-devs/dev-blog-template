@@ -125,7 +125,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Sven Patrick Meier (spmse). Built with Docusaurus and 💚.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Ralf Hamacher. Built with Docusaurus, extended from the developer-akademie-starter.`,
     },
     prism: {
       theme: prismThemes.github,
