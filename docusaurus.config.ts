@@ -7,7 +7,8 @@ dotenvconfig();
 
 /* TODO: change to read configuration from environment */
 const blogEnabled = Boolean(process.env.BLOG_ENABLED === 'true')
-
+const gitRepositoryUrl =
+  process.env.GIT_REPOSITORY_URL ?? "https://github.com/ralfs-devs/dev-blog-template";
 const config: Config = {
   title: 'Ralf\'s DevSecOps Portfolio',
   tagline: 'DevSecOps learning journal — documenting my path from Linux and networking to secure deployments',
@@ -45,8 +46,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/spmse/dev-blog-template',
+          editUrl: `${gitRepositoryUrl}/edit/main/`,
         },
         blog: blogEnabled ? 
           {
@@ -57,8 +57,7 @@ const config: Config = {
             },
             // Please change this to your repo.
             // Remove this to remove the "edit this page" links.
-            editUrl:
-              'https://github.com/spmse/dev-blog-template',
+            editUrl: `${gitRepositoryUrl}/edit/main/`,
             // Useful options to enforce blogging best practices
             onInlineTags: 'warn',
             onInlineAuthors: 'warn',
