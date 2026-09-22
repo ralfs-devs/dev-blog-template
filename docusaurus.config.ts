@@ -110,23 +110,7 @@ const config: Config = {
             },
           ],
         },
-        {
-          title: 'Community',
-          items: [
-            {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
-            },
-          ],
-        },
+        
         {
           title: 'More',
           items: [
@@ -164,7 +148,7 @@ if (blogEnabled) {
   (config.themeConfig.navbar as any).items.push({to: '/blog', label: 'Blog', position: 'left'});
   (
     config.themeConfig.footer as any
-  ).links[2].items.push({
+  ).links[1].items.push({
     to: '/blog',
     label: 'Blog',
   });
