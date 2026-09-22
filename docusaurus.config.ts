@@ -75,9 +75,9 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: "Ralf's DevSecOps Portfolio",
       logo: {
-        alt: 'My Site Logo',
+        alt: "Ralf's DevSecOps Portfolio Logo",
         src: 'img/logo.svg',
       },
       items: [
@@ -88,8 +88,8 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/spmse/dev-blog-template',
-          label: 'Github',
+          href: `${gitRepositoryUrl}`,
+          label: 'GitHub',
           position: 'right',
         },
       ],
