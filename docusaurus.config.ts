@@ -149,13 +149,18 @@ const config: Config = {
 
 
 if (blogEnabled) {
-  (config.themeConfig.navbar as any).items.push({to: '/blog', label: 'Blog', position: 'left'});
-  (
-    config.themeConfig.footer as any
-  ).links[1].items.push({
-    to: '/blog',
-    label: 'Blog',
-  });
-}
+  const navbar = config.themeConfig?.navbar as
+    { items?: Array<{ to?: string; label?: string; position?: string }> }
+    | undefined;
 
+  navbar?.items?.push({to: '/blog', label: 'Blog', position: 'left'});
+
+  const footer = config.themeConfig?.footer as
+    { links?: Array<{ title?: string; items?: Array<{ to: string; label: string }> }> }
+    | undefined;
+
+  footer?.links
+    ?.find(column => column.title === 'More')
+    ?.items?.push({ to: '/blog', label: 'Blog' });
+}
 export default config;
