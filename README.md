@@ -13,7 +13,6 @@ and seamless deployment to platforms like GitHub Pages or NGINX.
 
 ## Table of Contents
 
-- [My Developer Blog](#my-developer-blog)
   - [Repository Description](#repository-description)
   - [Table of Contents](#table-of-contents)
   - [Quickstart](#quickstart)
@@ -29,58 +28,57 @@ and seamless deployment to platforms like GitHub Pages or NGINX.
 
 1. Installation
 
-   ```
-   $ npm install
-   ```
+  ```
+  $ npm install
+  ```
 
 2. Local Development
 
-   ```
-   $ npm start
-   ```
+  ```
+  $ npm start
+  ```
 
-   This command starts a local development server and opens up a browser window.
-   Most changes are reflected live without having to restart the server.
+This command starts a local development server and opens up a browser window.
+Most changes are reflected live without having to restart the server.
 
 3. Build
 
-   ```
-   $ npm run build
-   ```
+  ```
+  $ npm run build
+  ```
 
-   This command generates static content into the `build` directory 
-   and can be served using any static contents hosting service.
+This command generates static content into the `build` directory 
+and can be served using any static contents hosting service.
 
 4. Deployment
 
-   Pushing a commit to the main branch automatically triggers 
-   the GitHub Actions workflow, which builds the site and deploys it 
-   to GitHub Pages. See the [Deployment](#deployment) section for details.
-
+    Pushing a commit to the main branch automatically triggers 
+  the GitHub Actions workflow, which builds the site and deploys it 
+  to GitHub Pages. See the [Deployment](#deployment) section for details.
 
 ## Repository Structure
 
 The repository is organized as follows:
 
-- `blog/`: Contains markdown files for blog posts. Blog-related metadata 
+  - `blog/`: Contains markdown files for blog posts. Blog-related metadata 
 is automatically picked up by the Docusaurus configuration.
-- `docs/`: Contains markdown files for documentation. 
+  - `docs/`: Contains markdown files for documentation. 
 These files are referenced in `sidebars.ts` to define the sidebar structure.
-- `src/`: Contains custom React components, CSS, and JavaScript 
+  - `src/`: Contains custom React components, CSS, and JavaScript 
 for additional functionality or theming.
-- `static/`: Stores static assets (e.g., images, icons) 
+  - `static/`: Stores static assets (e.g., images, icons) 
 served directly without processing.
-- `sidebars.ts`: Configures the structure of sidebars 
+  - `sidebars.ts`: Configures the structure of sidebars 
 in the documentation section.
-- `docusaurus.config.ts`: Main configuration file 
+  - `docusaurus.config.ts`: Main configuration file 
 for customizing and managing Docusaurus behavior.
-- `build/`: Generated after running the `npm run build` command. 
+  - `build/`: Generated after running the `npm run build` command. 
 Contains the static website files ready for deployment.
 
 New content can be added as follows:
 
-- Add new documentation files to the `docs/` folder.
-- Add new blog posts to the `blog/` folder. 
+  - Add new documentation files to the `docs/` folder.
+  - Add new blog posts to the `blog/` folder. 
 No additional configuration is required.
 
 ## Deployment
@@ -89,4 +87,4 @@ This website is deployed automatically to GitHub Pages
 using a prepared GitHub Actions workflow. 
 Whenever a commit is pushed to the main branch, 
 the workflow builds the site and publishes it 
-— no manual deployment steps are required.
+  — no manual deployment steps are required.
