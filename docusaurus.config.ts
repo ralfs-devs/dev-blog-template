@@ -106,7 +106,7 @@ const config: Config = {
             },
             {
               label: 'Projects',
-              to: '/docs/projects',
+              to: '/docs/projects/overview',
             },
           ],
         },
@@ -149,9 +149,7 @@ const config: Config = {
 
 
 if (blogEnabled) {
-  const navbar = config.themeConfig?.navbar as
-    { items?: Array<{ to?: string; label?: string; position?: string }> }
-    | undefined;
+  const navbar = config.themeConfig?.navbar as any;
 
   navbar?.items?.push({to: '/blog', label: 'Blog', position: 'left'});
 
