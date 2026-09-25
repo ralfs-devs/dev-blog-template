@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # V-Server Setup
 
 <!--INSERT YOUR BRIEF DESCRIPTION HERE -->
