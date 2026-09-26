@@ -59,7 +59,7 @@ Within 24 hours of operation,
 more than 1,000 automated SSH login attempts
 were recorded on the server, targeting common usernames such as `root`:
 
-    Connection closed by authenticating user root <IP> port 44384 [preauth]
+    Connection closed by authenticating user root [IP] port 44384 [preauth]
 
 The `[preauth]` marker shows that these attempts fail before any
 credential check occurs: the server only offers public key
