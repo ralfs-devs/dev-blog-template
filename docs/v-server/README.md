@@ -39,11 +39,11 @@ The effective SSH daemon configuration was verified with `sshd -T`:
 
 The hardening was validated with two tests from the client:
 
-    $ ssh user@<SERVER_IP>
+    $ ssh user@[SERVER_IP]
     (login succeeds without any password prompt)
 
-    $ ssh -o PubKeyAuthentication=no user@<SERVER_IP>
-    user@<SERVER_IP>: Permission denied (publickey).
+    $ ssh -o PubKeyAuthentication=no user@[SERVER_IP]
+    user@[SERVER_IP]: Permission denied (publickey).
 
 The second test proves that no password prompt is offered at all –
 the server announces `publickey` as the only authentication method.
