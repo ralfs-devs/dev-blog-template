@@ -3,117 +3,242 @@ title: V-Server Setup
 sidebar_position: 1
 ---
 
-# V-Server Setup – Technical Documentation
+# V-Server Setup
+
+This guide walks you through setting up and securing your own cloud  
+server instance running Ubuntu 24.04 LTS – from the initial SSH login  
+to key-only authentication, a custom NGINX web page on port 8081  
+and a complete Git/GitHub configuration.
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Access and Security](#access-and-security)
-3. [Web Server](#web-server)
-4. [Version Control](#version-control)
-5. [Development Environment](#development-environment)
-6. [Lessons Learned](#lessons-learned)
+1. [Quickstart](#quickstart)
+2. [Description](#description)
+   - [1. Create an SSH Key Pair](#1-create-an-ssh-key-pair)
+   - [2. Copy Your Public Key to the Server](#2-copy-your-public-key-to-the-server)
+   - [3. Verify Key-Based Login](#3-verify-key-based-login)
+   - [4. Disable Password and Root Login](#4-disable-password-and-root-login)
+   - [5. Install and Configure NGINX](#5-install-and-configure-nginx)
+   - [6. Configure Git and GitHub Access](#6-configure-git-and-github-access)
+   - [7. Final Verification](#7-final-verification)
 
-## Overview
-- V-Server is my virtual server, which I set up 
-for learning and practice purposes as 
-part of a DevSecOps training program with my educational provider. 
-- server provider: DA Developer Akademie GmbH, Munich 
-- operating system: Ubuntu 24.04 LTS
+## Quickstart
 
-## Access and Security
+1. Generate an SSH key pair on your local machine (never on the server).  
+2. Log in to the V-Server via SSH using your username and password.  
+3. Add your public key to the server's authorized_keys with:  
+   `ssh-copy-id -i $HOME/.ssh/[keyname]_ed25519.pub [user]@[SERVER_IP]`  
+4. Log out of the server, then log back in using the key only:  
+   `ssh -i $HOME/.ssh/[keyname]_ed25519 [user]@[SERVER_IP]`  
+   – you should not be prompted for a password.  
+5. Disable password login and root login on the server  
+   (see [Section 4](#4-disable-password-and-root-login)).
+6. Install NGINX and serve a custom HTML page on port 8081  
+   (see [Section 5](#5-install-and-configure-nginx)).
+7. Configure your Git identity and a server-side SSH key for GitHub  
+   (see [Section 6](#6-configure-git-and-github-access)).
 
-Password-based login is completely disabled. The server is accessible
-exclusively via SSH key authentication:
+## Description
 
-- **Primary access:** locally generated Ed25519 key pair
-- **Fallback credentials:** two hardware security sticks
+The following sections describe each step in detail, including the
+commands to run and the output to expect.
 
-The effective SSH daemon configuration was verified with `sshd -T`:
+### 1. Create an SSH Key Pair
 
-    sudo sshd -T | grep -E "passwordauthentication|pubkeyauthentication|permitrootlogin"
-    permitrootlogin without-password
-    pubkeyauthentication yes
-    passwordauthentication no
+Generate the key pair on your **local machine**.
+An Ed25519 key is recommended:
 
+```bash
+ssh-keygen -t ed25519 -C "[your-email@example.com]"
+```
 
-The hardening was validated with two tests from the client:
+This creates the private key `~/.ssh/[keyname]_ed25519`
+and the public key `~/.ssh/[keyname]_ed25519.pub`. 
 
-    $ ssh user@[SERVER_IP]
-    (login succeeds without any password prompt)
+### 2. Copy Your Public Key to the Server
 
-    $ ssh -o PubKeyAuthentication=no user@[SERVER_IP]
-    user@[SERVER_IP]: Permission denied (publickey).
+While password login is still active, transfer the public key:
 
-The second test proves that no password prompt is offered at all –
-the server announces `publickey` as the only authentication method.
+```
+ssh-copy-id -i $HOME/.ssh/[keygen]_ed25519.pub [user]@[SERVER_IP]
+```
 
-All access methods are managed via host aliases in the SSH config of
-the client. Each alias (standard key, hardware stick, backup stick)
-specifies its key file via `IdentitiesOnly yes`, so plugged-in
-security sticks do not interfere with the standard login.
+**Caution:** Don't forget the Extension .pub in order not to transfer  
+the private key. Confirm the transfer with your password when prompted.  
+The key is then appended to ~/.ssh/authorized_keys on the server.
 
-### Observed Threat Activity
+### 3. Verify Key-Based Login
 
-Within 24 hours of operation,
-more than 1,000 automated SSH login attempts
-were recorded on the server, targeting common usernames such as `root`:
+Log out of the server and log back in using only the key:
 
-    Connection closed by authenticating user root [IP] port 44384 [preauth]
+```
+ssh -i $HOME/.ssh/[keyname]_ed25519 [user]@[SERVER_IP]
+```
 
-The `[preauth]` marker shows that these attempts fail before any
-credential check occurs: the server only offers public key
-authentication, so password-guessing bots disconnect immediately.
-This observation confirms the effectiveness of the key-only policy.
+You should be logged in without any password prompt.  
+Do not continue with Section 4 until this works reliably,  
+otherwise you will lock yourself out of the server.
 
-## Web Server
-- NGINX installation
-- Alternative HTML page at /var/www/alternatives/alternate-index.html
-- Permissions on the web root
-- Validity checked with `nginx -t`: 
+### 4. Disable Password and Root Login
+
+Open the SSH daemon configuration:
+
+```
+sudo nano /etc/ssh/sshd_config
+```
+
+Set or uncomment the following directives:
+
+```
+PasswordAuthentication no
+PermitRootLogin no
+PubkeyAuthentication yes
+```
+
+**Warning:** Watch out for drop-in files: on many cloud images,  
+the file /etc/ssh/sshd_config.d/50-cloud-init.conf  
+overrides the main configuration, because include files are processed first  
+and the first value wins.  
+Make sure this file does not re-enable password authentication:
+
+```
+sudo nano /etc/ssh/sshd_config.d/50-cloud-init.conf
+```
+
+Apply the changes:
+
+```
+sudo systemctl restart sshd
+```
+
+Verify the effective configuration (do not trust the config files alone):
+
+```
+sudo sshd -T | grep -E "passwordauthentication|pubkeyauthentication|permitrootlogin"
+```
+
+Expected output:
+
+```
+permitrootlogin no (or without-password)  
+pubkeyauthentication yes  
+passwordauthentication no  
+```
+
+### 5. Install and Configure NGINX
+
+Install the web server:
+
+```
+sudo apt update && sudo apt install nginx -y
+```
+
+Create the directory for your custom page and place your HTML file there:
+
+```
+sudo mkdir -p /var/www/alternative
+sudo touch alternate-index.html
+sudo cp alternate-index.html /var/www/alternative/
+```
+
+Configure NGINX to listen on port 8081 and serve this page
+as the entry point:
+
+```
+sudo nano /etc/nginx/sites-available/default
+```
+
+```nginx
+server {
+    listen 8081;
+    listen [::]:8081;
+    root /var/www/alternative;
+    index alternate-index.html;
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+Validate the configuration before applying it:
+
+```
 sudo nginx -t
+```
+
+Expected output: 
+
+```
 nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-nginx: configuration file /etc/nginx/nginx.conf test is successful
+nginx: configuration file /etc/nginx/nginx.conf test is successful  
+```
 
-## Version Control
-- Git configured on the server (user.name, user.email)
-- SSH config backup in a dedicated repository
-- GitHub integration of the server via its own SSH key
+Reload NGINX:
 
-## Development Environment
-- VS Code Remote-SSH (isolated instance)
+```
+sudo systemctl reload nginx
+```
 
-## Lessons Learned
+Open http://[SERVER_IP]:8081 in your browser to confirm  
+that your custom page is served.
 
-### Configuration Precedence Pitfall
-After setting `PasswordAuthentication no` in `/etc/ssh/sshd_config`, password
-prompts still appeared. Diagnosis: `/etc/ssh/sshd_config.d/50-cloud-init.conf`
-(created by the cloud-init template) overrides the main config, because
-include files are processed first and the first value wins in OpenSSH.
+### 6. Configure Git and GitHub Access
 
-**Fix:** Align the drop-in with the intended policy (`PasswordAuthentication no`).
+Set your Git identity on the server so it matches  
+the data stored in your GitHub account:
 
-**Lesson:** Always verify effective configuration with `sshd -T` instead of
-trusting the main config file.
+```
+git config --global user.name "[Your Name]"
+git config --global user.email "[your-email@example.com]"
+```
 
-### NGINX Syntax Sensitivity
-Adding a semicolon to the `try_files` directive resolved a configuration
-error. The parser fails at the next token (closing brace), making the error
-message ("unexpected `}`") misleading – the real issue was the missing
-semicolon on the previous line.
+To interact with GitHub repositories from the server,  
+generate a dedicated SSH key pair on the server:
 
-**Lesson:** NGINX (like C-style languages) requires semicolons after every
-directive. Python developers need to be aware of this context switch.
+```
+ssh-keygen -t ed25519 -C "[your-email@example.com]"
+```
 
-### Security Through Hardening
-With password authentication disabled, all 1,000+ automated login attempts
-failed immediately with `[preauth]` markers, proving the effectiveness of
-key-only authentication. Without this measure, the server would be
-vulnerable to brute-force attacks.
+Print the public key  
+and add it to your GitHub account under Settings → SSH and GPG keys:
 
-## References
+```
+cat ~/.ssh/[key_id]_ed25519.pub
+```
 
-- Course materials and setup guide, DA Developer Akademie GmbH
-- Project FAQs provided by DA Developer Akademie GmbH
-- `man sshd_config` – OpenSSH daemon configuration reference
-- `man nginx` – NGINX command-line reference
+Verify the connection:
+
+```
+ssh -T git@github.com
+```
+
+You should see a greeting with your GitHub username.
+
+### 7. Final Verification
+
+Run these checks from your local machine:
+
+Key-based login still works:
+
+```
+ssh [user]@[SERVER_IP]
+```
+
+Password login is rejected:
+
+```
+ssh -o PubKeyAuthentication=no [user]@[SERVER_IP]
+```
+
+Expected output:
+
+```
+[user]@[SERVER_IP]: Permission denied (publickey).
+```
+
+The server announces publickey as the only accepted authentication method  
+no password prompt is offered at all.
+
+The web server responds on port 8081: open http://[SERVER_IP]:8081  
+in your browser.
+
