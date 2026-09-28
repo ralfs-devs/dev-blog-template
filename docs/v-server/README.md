@@ -12,8 +12,9 @@ and a complete Git/GitHub configuration.
 
 ## Table of Contents
 
-1. [Quickstart](#quickstart)
-2. [Description](#description)
+1. [Prerequisites](#prerequisites)
+2. [Quickstart](#quickstart)
+3. [Description](#description)
    - [1. Create an SSH Key Pair](#1-create-an-ssh-key-pair)
    - [2. Copy Your Public Key to the Server](#2-copy-your-public-key-to-the-server)
    - [3. Verify Key-Based Login](#3-verify-key-based-login)
@@ -21,6 +22,14 @@ and a complete Git/GitHub configuration.
    - [5. Install and Configure NGINX](#5-install-and-configure-nginx)
    - [6. Configure Git and GitHub Access](#6-configure-git-and-github-access)
    - [7. Final Verification](#7-final-verification)
+
+## Prerequisites
+
+Before you start, make sure you have the following:  
+- A virtual server (or VM) running **Ubuntu 24.04 LTS**  
+- SSH access to the server with username and password (initial setup)  
+- A local machine with a terminal and OpenSSH installed  
+- A GitHub account (for the repository interaction in Section 6)  
 
 ## Quickstart
 
