@@ -124,7 +124,22 @@ const config: Config = {
             },
           ],
         },
+
+        {
+          title: 'Legal',
+          items: [
+            {
+              label: 'Impressum',
+              to: '/docs/legal/impressum',
+            },
+            {
+              label: 'Datenschutz',
+              to: '/docs/legal/datenschutz',
+            },
+          ],
+        },
       ],
+      
       copyright: `Copyright © ${new Date().getFullYear()} Ralf Hamacher. Built with Docusaurus, extended from the developer-akademie-starter.`,
     },
     prism: {
