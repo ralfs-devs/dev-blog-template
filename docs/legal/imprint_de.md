@@ -1,5 +1,5 @@
 ---
-title: Impressum
+title: Imprint/Impressum
 sidebar_position: 1
 ---
 
@@ -29,4 +29,12 @@ Diese Website wird auf GitHub Pages gehostet
 
 ---
 
-[Datenschutzerklärung](/docs/legal/datenschutz)
+[Datenschutz](/docs/legal/privacy_policy_de)
+
+[English version of this side](/docs/legal/imprint_en)
+
+---
+
+
+
+

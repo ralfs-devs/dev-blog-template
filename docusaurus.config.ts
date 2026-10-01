@@ -129,12 +129,12 @@ const config: Config = {
           title: 'Legal',
           items: [
             {
-              label: 'Impressum',
-              to: '/docs/legal/impressum',
+              label: 'Imprint/Impressum',
+              to: '/docs/legal/imprint_de',
             },
             {
-              label: 'Datenschutz',
-              to: '/docs/legal/datenschutz',
+              label: 'Privacy Policy/Datenschutz',
+              to: '/docs/legal/privacy_policy_de',
             },
           ],
         },
