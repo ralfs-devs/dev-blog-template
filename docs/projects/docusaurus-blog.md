@@ -9,7 +9,7 @@ A personalization journey of the Developer Akademie Docusaurus template
 for the DevSecOps portfolio project, covering configuration, customization 
 and lessons learned along the way.
 
-## TOC
+## Table of Contents
 
 - [Quickstart](#quickstart)
 - [Description](#description)
