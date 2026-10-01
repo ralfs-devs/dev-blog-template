@@ -17,7 +17,7 @@ E-Mail: ralf.hamacher@googlemail.com
 
 **Hinweis**
 Diese Website ist ein Ausbildungsprojekt im Rahmen der DevSecOps-Ausbildung  
-bei der Developer Akademie.  
+bei der DA Developer Akademie GmbH, München.  
 Sie dokumentiert den Lernfortschritt und präsentiert Übungsprojekte.  
 Die Seite wird auch im Rahmen von Bewerbungen als Arbeitsprobe weitergegeben.  
 Es werden keine Waren oder Dienstleistungen angeboten  

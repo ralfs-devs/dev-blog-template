@@ -20,7 +20,7 @@ Email: ralf.hamacher@googlemail.com
 
 **Note**
 This website is a training project within the DevSecOps program  
-at Developer Akademie. It documents learning progress  
+at DA Developer Akademie GmbH, Munich. It documents learning progress  
 and presents practice projects.  
 The site is also shared as a work sample during job applications.  
 No goods or services are offered, and no advertising is placed.
