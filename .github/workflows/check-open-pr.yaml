@@ -1,9 +1,6 @@
 name: Check open PR for feature branch
 
 on:
-  push:
-    branches-ignore:
-      - main
   pull_request:
     types: [opened]
 
@@ -40,7 +37,7 @@ jobs:
               exit 0
             fi
 
-            echo "Attempt $ATTEMPT/$MAX_ATTEMPTS: no open PR yet, retrying in $SLEEP_SECONDS seconds..."
+            echo "Attempt $ATTEMPT/$MAX_ATTEMPTS: PR not ready yet, retrying in $SLEEP_SECONDS seconds..."
             sleep $SLEEP_SECONDS
           done
 
