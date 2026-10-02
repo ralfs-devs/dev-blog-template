@@ -5,12 +5,12 @@ sidebar_position: 2
 
 # Datenschutzerklärung
 
-Letzte Aktualisierung: 2026-09-30
+Letzte Aktualisierung: 2026-10-02
 
 ## Verantwortlicher
 
 Verantwortlich für die Datenverarbeitung auf dieser Website ist der im  
-[Impressum](/docs/legal/imprint_de) genannte Anbieter.
+[Impressum](/docs/legal/imprint) genannte Anbieter.
 
 ## Datenerfassung auf dieser Website
 
@@ -42,8 +42,8 @@ sowie ein Beschwerderecht bei der zuständigen Aufsichtsbehörde.
 
 ---
 
-[English version of this side](/docs/legal/privacy_policy_en)
+[English version of this site](/docs/legal/privacy_policy_en)
 
-[Impressum](/docs/legal/imprint_de)
+[Impressum](/docs/legal/imprint)
 
 ---
