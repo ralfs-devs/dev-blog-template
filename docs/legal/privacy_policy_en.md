@@ -6,15 +6,15 @@ sidebar_position: 4
 # Privacy Policy
 
 > This English version is provided for informational purposes only.
-> The German original [Datenschutzerklärung](/docs/legal/privacy_policy_de)  
+> The German original [Datenschutzerklärung](/docs/legal/privacy_policy)  
 is legally binding.
 
-Last updated: 2026-09-30
+Last updated: 2026-10-02
 
 ## Responsible Party
 
 The provider responsible for data processing on this website is  
-the provider named in the [Impressum](/docs/legal/imprint_de).
+the provider named in the [Impressum](/docs/legal/imprint).
 
 ## Data Collection on This Website
 
@@ -44,6 +44,8 @@ You have the right to request information, correction, deletion, and restriction
 of processing of your personal data at any time,  
 as well as to lodge a complaint with the competent supervisory authority.
 
-[Datenschutzerklärung](/docs/legal/imprint_de)
+---
 
-[Imprint](/docs/legal/imprint_en)
+[Datenschutzerklärung](/docs/legal/privacy_policy)
+
+[Imprint](/docs/legal/imprint)

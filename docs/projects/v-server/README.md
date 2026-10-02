@@ -36,9 +36,9 @@ Before you start, make sure you have the following:
 1. Generate an SSH key pair on your local machine (never on the server).  
 2. Log in to the V-Server via SSH using your username and password.  
 3. Add your public key to the server's authorized_keys with:  
-   `ssh-copy-id -i $HOME/.ssh/[keyname]_ed25519.pub [user]@[SERVER_IP]`  
+   `ssh-copy-id -i $HOME/.ssh/<keyname>_ed25519.pub <user>@<SERVER_IP>`  
 4. Log out of the server, then log back in using the key only:  
-   `ssh -i $HOME/.ssh/[keyname]_ed25519 [user]@[SERVER_IP]`  
+   `ssh -i $HOME/.ssh/<keyname>_ed25519 <user>@<SERVER_IP>`  
    – you should not be prompted for a password.  
 5. Disable password login and root login on the server  
    (see [Section 4](#4-disable-password-and-root-login)).
@@ -58,18 +58,18 @@ Generate the key pair on your **local machine**.
 An Ed25519 key is recommended:
 
 ```bash
-ssh-keygen -t ed25519 -C "[your-email@example.com]"
+ssh-keygen -t ed25519 -C "<your-email>@example.com"
 ```
 
-This creates the private key `~/.ssh/[keyname]_ed25519`
-and the public key `~/.ssh/[keyname]_ed25519.pub`. 
+This creates the private key `~/.ssh/<keyname>_ed25519`
+and the public key `~/.ssh/<keyname>_ed25519.pub`. 
 
 ### 2. Copy Your Public Key to the Server
 
 While password login is still active, transfer the public key:
 
 ```
-ssh-copy-id -i $HOME/.ssh/[keygen]_ed25519.pub [user]@[SERVER_IP]
+ssh-copy-id -i $HOME/.ssh/<keyname>_ed25519.pub <user>@<SERVER_IP>
 ```
 
 **Caution:** Don't forget the Extension .pub in order not to transfer  
@@ -81,7 +81,7 @@ The key is then appended to ~/.ssh/authorized_keys on the server.
 Log out of the server and log back in using only the key:
 
 ```
-ssh -i $HOME/.ssh/[keyname]_ed25519 [user]@[SERVER_IP]
+ssh -i $HOME/.ssh/<keyname>_ed25519 <user>@<SERVER_IP>
 ```
 
 You should be logged in without any password prompt.  
@@ -188,7 +188,7 @@ Reload NGINX:
 sudo systemctl reload nginx
 ```
 
-Open http://[SERVER_IP]:8081 in your browser to confirm  
+Open `http://<SERVER_IP>:8081` in your browser to confirm  
 that your custom page is served.
 
 ### 6. Configure Git and GitHub Access
@@ -197,22 +197,22 @@ Set your Git identity on the server so it matches
 the data stored in your GitHub account:
 
 ```
-git config --global user.name "[Your Name]"
-git config --global user.email "[your-email@example.com]"
+git config --global user.name "<Your Name>"
+git config --global user.email "<your-email>@example.com"
 ```
 
 To interact with GitHub repositories from the server,  
 generate a dedicated SSH key pair on the server:
 
 ```
-ssh-keygen -t ed25519 -C "[your-email@example.com]"
+ssh-keygen -t ed25519 -C "<your-email>@example.com"
 ```
 
 Print the public key  
 and add it to your GitHub account under Settings → SSH and GPG keys:
 
 ```
-cat ~/.ssh/[key_id]_ed25519.pub
+cat ~/.ssh/<keyname>_ed25519.pub
 ```
 
 Verify the connection:
@@ -230,24 +230,24 @@ Run these checks from your local machine:
 Key-based login still works:
 
 ```
-ssh [user]@[SERVER_IP]
+ssh <user>@<SERVER_IP>
 ```
 
 Password login is rejected:
 
 ```
-ssh -o PubKeyAuthentication=no [user]@[SERVER_IP]
+ssh -o PubKeyAuthentication=no <user>@<SERVER_IP>
 ```
 
 Expected output:
 
 ```
-[user]@[SERVER_IP]: Permission denied (publickey).
+<user>@<SERVER_IP>: Permission denied (publickey).
 ```
 
 The server announces publickey as the only accepted authentication method  
 no password prompt is offered at all.
 
-The web server responds on port 8081: open http://[SERVER_IP]:8081  
+The web server responds on port 8081: open `http://<SERVER_IP>:8081`  
 in your browser.
 

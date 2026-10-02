@@ -130,11 +130,11 @@ const config: Config = {
           items: [
             {
               label: 'Imprint/Impressum',
-              to: '/docs/legal/imprint_de',
+              to: '/docs/legal/imprint',
             },
             {
               label: 'Privacy Policy/Datenschutz',
-              to: '/docs/legal/privacy_policy_de',
+              to: '/docs/legal/privacy_policy',
             },
           ],
         },

@@ -6,7 +6,7 @@ sidebar_position: 3
 # Imprint
 
 > This English version is provided for informational purposes only.
-> The German original [Impressum](/docs/legal/imprint_de) is legally binding.
+> The German original [Impressum](/docs/legal/imprint) is legally binding.
 
 Information pursuant to § 5 DDG (German Digital Services Act)
 
@@ -20,7 +20,7 @@ Email: ralf.hamacher@googlemail.com
 
 **Note**
 This website is a training project within the DevSecOps program  
-at DA Developer Akademie GmbH, Munich. It documents learning progress  
+at Developer Akademie GmbH, Munich. It documents learning progress  
 and presents practice projects.  
 The site is also shared as a work sample during job applications.  
 No goods or services are offered, and no advertising is placed.
@@ -31,6 +31,6 @@ This website is hosted on GitHub Pages (GitHub Inc.,
 
 ---
 
-[Datenschutzerklärung](/docs/legal/privacy_policy_de)
+[Datenschutzerklärung](/docs/legal/privacy_policy)
 
 [Privacy Policy](/docs/legal/privacy_policy_en)
